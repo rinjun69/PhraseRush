@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import type { Level, BestRecords } from '../types'
 import { questions } from '../data/questions'
+import { Footer } from '../components/Footer'
 
 interface LevelMeta {
   level: Level
@@ -20,9 +21,10 @@ const LEVELS: LevelMeta[] = [
 interface Props {
   bestRecords: BestRecords
   onStart: (level: Level) => void
+  onOpenPrivacy: () => void
 }
 
-export function LevelSelectScreen({ bestRecords, onStart }: Props) {
+export function LevelSelectScreen({ bestRecords, onStart, onOpenPrivacy }: Props) {
   return (
     <motion.div
       className="flex flex-col items-center min-h-screen px-4 py-8 gap-6 max-w-lg mx-auto"
@@ -98,6 +100,8 @@ export function LevelSelectScreen({ bestRecords, onStart }: Props) {
           )
         })}
       </div>
+
+      <Footer onOpenPrivacy={onOpenPrivacy} />
     </motion.div>
   )
 }

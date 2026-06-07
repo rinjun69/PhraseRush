@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion'
 import type { GameState, BestRecords } from '../types'
+import { Footer } from '../components/Footer'
 
 interface Props {
   state: GameState
   bestRecords: BestRecords
   onRetry: () => void
   onLevelSelect: () => void
+  onOpenPrivacy: () => void
 }
 
 const LEVEL_NAMES: Record<number, string> = { 1: '初級', 2: '中級', 3: '上級' }
 const LEVEL_COLORS: Record<number, string> = { 1: '#3b82f6', 2: '#8b5cf6', 3: '#ef4444' }
 
-export function ResultScreen({ state, bestRecords, onRetry, onLevelSelect }: Props) {
+export function ResultScreen({ state, bestRecords, onRetry, onLevelSelect, onOpenPrivacy }: Props) {
   const best = bestRecords[state.level]
   const isNewBest = best?.score === state.score
   const levelColor = LEVEL_COLORS[state.level]
@@ -91,6 +93,8 @@ export function ResultScreen({ state, bestRecords, onRetry, onLevelSelect }: Pro
           レベル選択に戻る
         </motion.button>
       </div>
+
+      <Footer onOpenPrivacy={onOpenPrivacy} />
     </motion.div>
   )
 }
