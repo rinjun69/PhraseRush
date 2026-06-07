@@ -1,6 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import type { GameState, BestRecord, BestRecords, Level } from '../types'
 import { questions } from '../data/questions'
+import {
+  trackGameStart,
+  trackGameEnd,
+  trackCorrectAnswer,
+  trackIncorrectAnswer,
+  trackNewBestRecord,
+} from '../lib/analytics'
 
 const GAME_DURATION = 180
 
@@ -82,11 +89,13 @@ export function useGame() {
     if (state.phase !== 'playing' || state.timeLeft > 0) return
     stopTimer()
     const { score, cleared, maxCombo, level } = state
+    trackGameEnd({ level, score, cleared, maxCombo })
     const record: BestRecord = { score, cleared, maxCombo, date: new Date().toLocaleDateString('ja-JP') }
     const prev = loadBest(level)
     if (!prev || score > prev.score) {
       saveBest(level, record)
       setBestRecords((r) => ({ ...r, [level]: record }))
+      trackNewBestRecord(level, score)
     }
     setState((s) => ({ ...s, phase: 'result' }))
   }, [state.timeLeft, state.phase])
@@ -110,6 +119,7 @@ export function useGame() {
 
   const startGame = useCallback((level: Level) => {
     const lqs = levelQuestions(level)
+    trackGameStart(level)
     setState({
       level,
       phase: 'playing',
@@ -146,6 +156,12 @@ export function useGame() {
       const isCorrect = newSelected.join(' ') === q.answer.join(' ')
       const newCombo = isCorrect ? s.combo + 1 : 0
       const newScore = s.score + (isCorrect ? 100 + (newCombo - 1) * 20 : 0)
+
+      if (isCorrect) {
+        trackCorrectAnswer(s.level, q.id, newCombo)
+      } else {
+        trackIncorrectAnswer(s.level, q.id)
+      }
 
       return {
         ...s,
