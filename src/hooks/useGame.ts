@@ -21,7 +21,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 function bestKey(level: Level) {
-  return `english-tetris-best-${level}`
+  return `phrase-rush-best-${level}`
 }
 
 function loadBest(level: Level): BestRecord | null {
