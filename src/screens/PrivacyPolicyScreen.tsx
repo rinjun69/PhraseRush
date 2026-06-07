@@ -89,7 +89,7 @@ const SECTIONS: Record<Lang, Section[]> = {
       title: '9. お問い合わせ',
       content: [
         ['本プライバシーポリシーに関するお問い合わせは、以下のメールアドレスまでお願いいたします。'],
-        [{ label: 'rinjun69@gmail.com', href: 'mailto:rinjun69@gmail.com' }],
+        [{ label: 'info.phraserush@gmail.com', href: 'mailto:info.phraserush@gmail.com' }],
       ],
     },
   ],
@@ -161,7 +161,7 @@ const SECTIONS: Record<Lang, Section[]> = {
       title: '9. Contact',
       content: [
         ['For inquiries regarding this Privacy Policy, please contact us at:'],
-        [{ label: 'rinjun69@gmail.com', href: 'mailto:rinjun69@gmail.com' }],
+        [{ label: 'info.phraserush@gmail.com', href: 'mailto:info.phraserush@gmail.com' }],
       ],
     },
   ],
